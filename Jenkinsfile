@@ -23,13 +23,13 @@ pipeline{
                 }
                 stage("OWASP Dependency Check"){
                     steps{
-                        dependencyCheck additionalArguments: '''--scan ./*' 
-                            --out ./*'  
-                            --format ALL' 
-                            --disableYarnAudit \
+                        dependencyCheck additionalArguments: '''
+                            --scan ./ 
+                            --out ./ 
+                            --format ALL 
                             --prettyPrint''', odcInstallation: 'DC'
 
-                        dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
                     }
                 }
             }
