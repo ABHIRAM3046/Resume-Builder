@@ -38,7 +38,13 @@ pipeline{
         stage("SonarQube Analysis"){
             steps{
                 withSonarQubeEnv("Sonar"){
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
+                    sh '''
+                    $SONAR_HOME/bin/sonar-scanner \
+                        -Dsonar.projectKey=Resume-Builder \
+                        -Dsonar.sources=. \
+                        -Dsonar.host.url=http://23.21.49.221:9000 \
+                        -Dsonar.token=sqp_8142d5a4dd2f2a20a47c47418dfe62244174a456
+                    '''
                 }
             }
         }
