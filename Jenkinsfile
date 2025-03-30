@@ -1,8 +1,10 @@
 pipeline{
     agent any
+    tools{
+        nodejs 'nodejs-23-10-0'
+    }
     environment{
         SONAR_HOME= tool "Sonar"
-        nodejs 'nodejs-23-10-0'
     }
     stages{
         stage('Install Dependencies'){
