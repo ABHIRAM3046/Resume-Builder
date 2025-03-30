@@ -2,11 +2,32 @@ pipeline{
     agent any
     environment{
         SONAR_HOME= tool "Sonar"
+        nodejs 'nodejs-23-10-0'
     }
     stages{
-        stage("Get Code From Github"){
+        stage('Install Dependencies'){
             steps{
-                git url:"https://github.com/ABHIRAM3046/Resume-Builder.git",branch:"master"
+                sh "npm install --no-audit"
+            }
+        }
+        stage('Dependency Scanning'){
+            parallel{
+                stage('NPM Dependency Audit'){
+                    steps{
+                        sh '''npm audit --audit-level=critical
+                        echo $?
+                        '''
+                    }
+                }
+                stage("OWASP Dependency Check"){
+                    steps{
+                        dependencyCheck additionalArguments: '''
+                        --scan \'. /\'
+                        --out  \' ./\'
+                        --format \' ALL\'
+                        --prettyPrint''', odcInstallation: 'DC'
+                    }
+                }
             }
         }
         stage("SonarQube Analysis"){
@@ -14,12 +35,6 @@ pipeline{
                 withSonarQubeEnv("Sonar"){
                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
                 }
-            }
-        }
-        stage("OWASP Dependency Check"){
-            steps{
-                dependencyCheck additionalArguments: '--scan ./' , odcInstallation: 'DC'
-                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
             }
         }
         stage("Remove Previous Docker Image and Container"){
