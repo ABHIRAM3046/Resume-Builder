@@ -23,10 +23,9 @@ pipeline{
                 }
                 stage("OWASP Dependency Check"){
                     steps{
-                        dependencyCheck additionalArguments: '''
-                            --scan \'./\' 
-                            --out \'./\'  
-                            --format \'ALL\' 
+                        dependencyCheck additionalArguments: '''--scan ./*' 
+                            --out ./*'  
+                            --format ALL' 
                             --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'DC'
 
