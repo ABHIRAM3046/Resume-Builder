@@ -4,11 +4,6 @@ pipeline{
          SONAR_HOME= tool "Sonar"
      }
      stages{
-         stage("Get Code From Github"){
-             steps{
-                 git url:"https://github.com/ABHIRAM3046/Resume-Builder.git",branch:"master"
-             }
-         }
          stage("SonarQube Analysis"){
              steps{
                  withSonarQubeEnv("Sonar"){
