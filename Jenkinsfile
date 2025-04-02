@@ -35,10 +35,10 @@ pipeline{
          }
          stage("SonarQube Analysis"){
              steps{
-                    withSonarQubeEnv("Sonar"){
-                        sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
-                    }
-                    waitForQualityGate abortPipeline: true
+                withSonarQubeEnv("Sonar"){
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
+                }
+                waitForQualityGate abortPipeline: true
              }
          }
         //  stage("Remove Previous Docker Image and Container"){
