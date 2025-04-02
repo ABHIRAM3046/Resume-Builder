@@ -43,26 +43,26 @@ pipeline{
                 }
              }
          }
-         stage("Remove Previous Docker Image and Container"){
-             steps{
-                 sh "docker stop resume-builder || true"
-                 sh "docker rm resume-builder || true"
-             }
-         }
-         stage("Docker Image Build"){
-             steps{
-                 sh "docker build -t resume-builder ."
-             }
-         }
-         stage("Trivy Image Scan"){
-             steps{
-                  sh "trivy image --no-progress --severity HIGH,CRITICAL resume-builder"
-             }
-         }
-         stage("Docker Run Deployment"){
-             steps{
-                 sh"docker run -d -p 5173:5173 --name resume-builder resume-builder"
-             }
-         }
+        //  stage("Remove Previous Docker Image and Container"){
+        //      steps{
+        //          sh "docker stop resume-builder || true"
+        //          sh "docker rm resume-builder || true"
+        //      }
+        //  }
+        //  stage("Docker Image Build"){
+        //      steps{
+        //          sh "docker build -t resume-builder ."
+        //      }
+        //  }
+        //  stage("Trivy Image Scan"){
+        //      steps{
+        //           sh "trivy image --no-progress --severity HIGH,CRITICAL resume-builder"
+        //      }
+        //  }
+        //  stage("Docker Run Deployment"){
+        //      steps{
+        //          sh"docker run -d -p 5173:5173 --name resume-builder resume-builder"
+        //      }
+        //  }
      }
  }
