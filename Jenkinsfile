@@ -35,7 +35,7 @@ pipeline{
          }
          stage("SonarQube Analysis"){
              steps{
-                timeout(time: 60, unit: 'SECONDS'){ {
+                timeout(time: 60, unit: 'SECONDS'){ 
                     withSonarQubeEnv("Sonar"){
                         sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
                     }
