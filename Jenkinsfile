@@ -1,20 +1,46 @@
 pipeline{
      agent any
+    tools{
+        nodejs 'nodejs-23-10-0'
+    }
      environment{
          SONAR_HOME= tool "Sonar"
      }
      stages{
-         stage("SonarQube Analysis"){
+        stage('Install Dependencies'){
              steps{
-                 withSonarQubeEnv("Sonar"){
-                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
-                 }
+                 sh "npm install --no audit"
              }
          }
-         stage("OWASP Dependency Check"){
+         stage('Dependency Check'){
+            parallel{
+                 stage('NPM Dependency Audit'){
+                    steps{
+                        sh '''npm audit --audit-level=critical
+                        echo $?
+                        '''
+                    }
+                }
+                stage("OWASP Dependency Check"){
+                    steps{
+                        dependencyCheck additionalArguments: '''
+                            --scan ./ 
+                            --out ./ 
+                            --format html 
+                            --prettyPrint''', odcInstallation: 'DC'
+                        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    }
+                }
+            }   
+         }
+         stage("SonarQube Analysis"){
              steps{
-                 dependencyCheck additionalArguments: '--scan ./' , odcInstallation: 'DC'
-                 dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                timeout(time: 60, unit: 'Seconds') {
+                    withSonarQubeEnv("Sonar"){
+                        sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
+                    }
+                    waitForQualityGate abortPipeline: true
+                }
              }
          }
          stage("Remove Previous Docker Image and Container"){
