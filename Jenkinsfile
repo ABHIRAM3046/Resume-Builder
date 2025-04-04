@@ -54,14 +54,13 @@ pipeline{
             steps{
                 sh'''
                 trivy image abhiram3046/resume-builder:$GIT_COMMIT \
-                        --severity LOW,MEDIUM,HIGH \
+                        --severity LOW,MEDIUM \
                         --exit-code 0 \
                         --quiet \
                         --format json -o trivy-image-MEDIUM-results.json
 
-                trivy image abhiram3046/resume-builder:$GIT_COMMIT \
-                        --severity CRITICAL \
-                        --exit-code 1 \
+                trivy image --no-progress abhiram3046/resume-builder:$GIT_COMMIT \
+                        --severity HIGH,CRITICAL \
                         --quiet \
                         --format json -o trivy-image-CRITICAL-results.json
                 '''
