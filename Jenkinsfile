@@ -39,6 +39,7 @@ pipeline{
                 withSonarQubeEnv("Sonar"){
                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
                 }
+                waitForQualityGate abortPipeline: true
              }
          }
         
