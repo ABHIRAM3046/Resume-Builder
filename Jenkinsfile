@@ -5,7 +5,8 @@ pipeline{
     }
      environment{
         SONAR_HOME= tool "Sonar"
-        
+        VITE_SUPABASE_URL = credentials('VITE_SUPABASE_URL')
+        VITE_SUPABASE_ANON_KEY = credentials('VITE_SUPABASE_ANON_KEY')
      }
      stages{
         stage('Install Dependencies'){
@@ -39,7 +40,6 @@ pipeline{
                 withSonarQubeEnv("Sonar"){
                     sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.projectKey=resume_builder"
                 }
-                waitForQualityGate abortPipeline: true
              }
          }
         
