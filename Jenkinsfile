@@ -50,11 +50,23 @@ pipeline{
                 sh "docker build -t abhiram3046/resume-builder:$GIT_COMMIT ."
             }
         }
-        //  stage("Trivy Image Scan"){
-        //      steps{
-        //           sh "trivy image --no-progress --severity HIGH,CRITICAL resume-builder"
-        //      }
-        //  }
+        stage("Trivy Vulnerability Scanner"){
+            steps{
+                sh'''
+                trivy image abhiram3046/resume-builder:$GIT_COMMIT \
+                        --severity LOW,MEDIUM,HIGH \
+                        --exit-code 0 \
+                        --quiet \
+                        --format json -o trivy-image-MEDIUM-results.json
+
+                trivy image siddharth67/solar-system:$GIT_COMMIT \
+                        --severity CRITICAL \
+                        --exit-code 1 \
+                        --quiet \
+                        --format json -o trivy-image-CRITICAL-results.json
+                '''
+            }
+        }
         //  stage("Docker Run Deployment"){
         //      steps{
         //          sh"docker run -d -p 5173:5173 --name resume-builder resume-builder"
