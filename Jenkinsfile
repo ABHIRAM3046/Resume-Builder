@@ -46,7 +46,6 @@ pipeline{
         
         stage("Docker Image Build"){
             steps{
-                sh "printenv"
                 sh "docker build --build-arg VITE_SUPABASE_URL=$VITE_SUPABASE_URL --build-arg  VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY -t abhiram3046/resume-builder:$GIT_COMMIT . "
             }
         }
@@ -56,6 +55,13 @@ pipeline{
                 trivy image --no-progress abhiram3046/resume-builder:$GIT_COMMIT --severity MEDIUM 
                 trivy image --no-progress abhiram3046/resume-builder:$GIT_COMMIT --severity HIGH,CRITICAL
                 '''
+            }
+        }
+        stage("Push Docker Image"){
+            steps{
+                withDockerRegistry(credentialsId: 'Docker-hub', url: '') {
+                    sh "docker push abhiram3046/resume-builder:$GIT_COMMIT"
+                }
             }
         }
         //  stage("Docker Run Deployment"){
