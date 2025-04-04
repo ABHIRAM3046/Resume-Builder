@@ -38,7 +38,7 @@ pipeline{
          stage("SonarQube Analysis"){
              steps{
                 withSonarQubeEnv("Sonar"){
-                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.sources=src/App.tsx -Dsonar.projectKey=resume_builder"
+                    sh "$SONAR_HOME/bin/sonar-scanner -Dsonar.projectName=resume-builder -Dsonar.sources=src/ -Dsonar.projectKey=resume_builder"
                 }
                 waitForQualityGate abortPipeline: true
              }
