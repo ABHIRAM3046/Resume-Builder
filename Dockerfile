@@ -12,6 +12,9 @@ RUN npm install
 # Copy the application code
 COPY . .
 
+ENV VITE_SUPABASE_URL=uriPlaceholder
+ENV VITE_SUPABASE_ANON_KEY=keyPlaceholder
+
 # Expose the port your app runs on
 EXPOSE 5173
 

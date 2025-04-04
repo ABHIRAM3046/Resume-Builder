@@ -4,7 +4,8 @@ pipeline{
         nodejs 'nodejs-23-10-0'
     }
      environment{
-         SONAR_HOME= tool "Sonar"
+        SONAR_HOME= tool "Sonar"
+        
      }
      stages{
         stage('Install Dependencies'){
@@ -41,17 +42,13 @@ pipeline{
                 waitForQualityGate abortPipeline: true
              }
          }
-        //  stage("Remove Previous Docker Image and Container"){
-        //      steps{
-        //          sh "docker stop resume-builder || true"
-        //          sh "docker rm resume-builder || true"
-        //      }
-        //  }
-        //  stage("Docker Image Build"){
-        //      steps{
-        //          sh "docker build -t resume-builder ."
-        //      }
-        //  }
+        
+        stage("Docker Image Build"){
+            steps{
+                sh "printenv"
+                sh "docker build -t abhiram3046/resume-builder:$GIT_COMMIT ."
+            }
+        }
         //  stage("Trivy Image Scan"){
         //      steps{
         //           sh "trivy image --no-progress --severity HIGH,CRITICAL resume-builder"
