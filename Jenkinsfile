@@ -47,7 +47,7 @@ pipeline{
         stage("Docker Image Build"){
             steps{
                 sh "printenv"
-                sh "docker build -t abhiram3046/resume-builder:$GIT_COMMIT ."
+                sh "docker build -t abhiram3046/resume-builder:$GIT_COMMIT . -environment VITE_SUPABASE_URL=$VITE_SUPABASE_URL -e environment VITE_SUPABASE_ANON_KEY=$VITE_SUPABASE_ANON_KEY"
             }
         }
         stage("Trivy Vulnerability Scanner"){
