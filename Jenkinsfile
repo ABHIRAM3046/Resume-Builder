@@ -60,8 +60,23 @@ pipeline{
         stage("Push Docker Image"){
             steps{
                 withDockerRegistry(credentialsId: 'Docker-hub', url: '') {
-                    sh "docker push abhiram3046/resume-builder:$GIT_COMMIT"
+                    sh '''
+                        docker push abhiram3046/resume-builder:$GIT_COMMIT
+                        docker tag abhiram3046/resume-builder:$GIT_COMMIT abhiram3046/resume-builder:latest
+                        docker push abhiram3046/resume-builder:latest
+                    '''
                 }
+            }
+        }
+        stage("Deploy to Kubernetes") {
+            steps {
+                sh '''
+                git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
+                cd Manifests
+                kubectl apply -f deployment.yaml
+                kubectl apply -f service.yaml
+                kubectl apply -f secret.yaml
+                '''
             }
         }
         //  stage("Docker Run Deployment"){
