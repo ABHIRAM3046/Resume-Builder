@@ -72,6 +72,7 @@ pipeline{
         stage("Deploy to Kubernetes") {
             steps {
                 sh '''
+                export KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config
                 cd Kubernetes-Mainfests/Manifests
                 kubectl apply -f deployment.yaml
                 kubectl apply -f service.yaml
