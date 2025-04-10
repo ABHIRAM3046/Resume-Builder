@@ -74,9 +74,9 @@ pipeline{
                 sh '''
                 export KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config
                 cd Kubernetes-Mainfests/Manifests
-                kubectl apply -f deployment.yaml
-                kubectl apply -f service.yaml
-                kubectl apply -f secrets.yaml
+                kubectl apply --validate=false -f deployment.yaml
+                kubectl apply --validate=false -f service.yaml
+                kubectl apply --validate=false -f secrets.yaml
                 '''
             }
         }
