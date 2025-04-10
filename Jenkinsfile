@@ -7,6 +7,7 @@ pipeline{
         SONAR_HOME= tool "Sonar"
         VITE_SUPABASE_URL = credentials('VITE_SUPABASE_URL')
         VITE_SUPABASE_ANON_KEY = credentials('VITE_SUPABASE_ANON_KEY')
+        KUBECONFIG = '/etc/kubernetes/admin.conf'
      }
      stages{
         stage('Install Dependencies'){
@@ -72,7 +73,7 @@ pipeline{
             steps {
                 sh '''
                 git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
-                cd Manifests
+                cd Kubernetes-Mainfests/Manifests
                 kubectl apply -f deployment.yaml
                 kubectl apply -f service.yaml
                 kubectl apply -f secret.yaml
