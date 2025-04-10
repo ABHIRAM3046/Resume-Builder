@@ -72,7 +72,6 @@ pipeline{
         stage("Deploy to Kubernetes") {
             steps {
                 sh '''
-                git pull https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
                 cd Kubernetes-Mainfests/Manifests
                 kubectl apply -f deployment.yaml
                 kubectl apply -f service.yaml
