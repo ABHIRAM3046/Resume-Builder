@@ -71,13 +71,15 @@ pipeline{
         }
         stage("Deploy to Kubernetes") {
             steps {
-                sh '''
-                export KUBECONFIG=/var/lib/jenkins/.minikube/profiles/minikube/config
-                cd Kubernetes-Mainfests/Manifests
-                kubectl apply -f deployment.yaml
-                kubectl apply -f service.yaml
-                kubectl apply -f secrets.yaml
-                '''
+                sshagent(['kube-deploy']) {
+                    sh '''
+                    git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
+                    cd Kubernetes-Mainfests/Manifests
+                    kubectl apply -f deployment.yaml
+                    kubectl apply -f service.yaml
+                    kubectl apply -f secrets.yaml
+                    '''
+                }
             }
         }
         //  stage("Docker Run Deployment"){
