@@ -73,6 +73,7 @@ pipeline{
             steps {
                 sshagent(['kube-deploy']) {
                     sh '''
+                    ssh -o StrictHostKeyChecking=no ubuntu@34.230.176.42
                     git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
                     cd Kubernetes-Mainfests/Manifests
                     kubectl apply -f deployment.yaml
