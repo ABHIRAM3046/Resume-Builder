@@ -85,10 +85,5 @@ pipeline{
                 }
             }
         }
-        //  stage("Docker Run Deployment"){
-        //      steps{
-        //          sh"docker run -d -p 5173:5173 --name resume-builder resume-builder"
-        //      }
-        //  }
-     }
- }
+    }
+}
