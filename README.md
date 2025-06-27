@@ -65,12 +65,12 @@ This project uses GitHub Actions for continuous integration and deployment:
 
 ---
 
-## 📸 Screenshots
+<!--## 📸 Screenshots
 
 <!-- Add screenshots/gifs of your app here -->
 <!-- Example: ![Demo](screenshots/demo.png) -->
 
----
+<!---->
 
 ## 🌐 Live Demo
 
