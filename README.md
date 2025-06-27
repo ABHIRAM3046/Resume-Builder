@@ -58,7 +58,7 @@ npm run dev
 
 ## 🧩 CI/CD Pipeline
 
-This project uses GitHub Actions for continuous integration and deployment:
+This project uses Jenkins for continuous integration and deployment:
 
 - **On every push:** Code is linted, tested, and built.
 - **On merge to main:** Application is automatically deployed to minikube running on an separate EC2 VM.
