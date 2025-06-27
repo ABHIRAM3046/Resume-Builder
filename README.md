@@ -27,7 +27,7 @@ Resume Builder is a web application that allows users to input their details and
 
 ## 💻 Tech Stack
 
-- **Frontend**: 
+- **Frontend**: Vite.js
 - **Backend**: Nodejs/Superbase
 - **Database**: PostgreSQL
 - **DevOps Tools**:
