@@ -73,15 +73,12 @@ pipeline{
             steps {
                 withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')]) {
                     sh '''
-                    rm -rf Kubernetes-Mainfests
-                    git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
-                    cd Kubernetes-Mainfests/Manifests
+                    kubectl config view
                     kubectl apply -f deployment.yaml
                     kubectl apply -f service.yaml
                     kubectl apply -f secrets.yaml
                     '''
                 }
-
             }
         }
     }
