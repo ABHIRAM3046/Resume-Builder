@@ -73,14 +73,12 @@ pipeline{
             steps {
                 sshagent(['kube-deploy']) {
                     sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@34.230.176.42 << 'ENDSSH'
-                            rm -rf Kubernetes-Mainfests
-                            git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
-                            cd Kubernetes-Mainfests/Manifests
-                            kubectl apply -f deployment.yaml
-                            kubectl apply -f service.yaml
-                            kubectl apply -f secrets.yaml
-                            
+                        rm -rf Kubernetes-Mainfests
+                        git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
+                        cd Kubernetes-Mainfests/Manifests
+                        kubectl apply -f deployment.yaml
+                        kubectl apply -f service.yaml
+                        kubectl apply -f secrets.yaml     
                     """
                 }
             }
