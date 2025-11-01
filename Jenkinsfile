@@ -1,8 +1,8 @@
 pipeline{
      agent any
-    tools{
-        nodejs 'nodejs-23-10-0'
-    }
+    // tools{
+    //     nodejs 'nodejs-23-10-0'
+    // }
      environment{
         SONAR_HOME= tool "Sonar"
         VITE_SUPABASE_URL = credentials('VITE_SUPABASE_URL')
