@@ -71,7 +71,6 @@ pipeline{
         }
         stage("Deploy to Kubernetes") {
             steps {
-                sshagent(['kube-deploy']) {
                     sh """
                         rm -rf Kubernetes-Mainfests
                         git clone https://github.com/ABHIRAM3046/Kubernetes-Mainfests.git
@@ -80,7 +79,6 @@ pipeline{
                         kubectl apply -f service.yaml
                         kubectl apply -f secrets.yaml     
                     """
-                }
             }
         }
     }
