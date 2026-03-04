@@ -53,7 +53,8 @@ pipeline{
         stage("Trivy Vulnerability Scanner"){
             steps{
                 sh'''
-                trivy image --no-progress abhiram3046/resume-builder:$GIT_COMMIT --severity MEDIUM 
+                trivy image --download-db-only
+                trivy image --timeout 15m --no-progress abhiram3046/resume-builder:$GIT_COMMIT --severity MEDIUM 
                 trivy image --no-progress abhiram3046/resume-builder:$GIT_COMMIT --severity HIGH,CRITICAL
                 '''
             }
